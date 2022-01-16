@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b2cf437c-fcf6-4967-80ea-5c344acae367" name="默认更改列表" comment="">
-      <change afterPath="$PROJECT_DIR$/day01/server/server.exe" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/day02/Dockerfile" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/day02/httpserver.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/day02/.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/day01/client/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/day01/client/client.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/day01/server/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/day01/server/server.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,7 +21,7 @@
   </component>
   <component name="GOROOT" path="C:\Go" />
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/day02" />
   </component>
   <component name="ProjectId" id="1pvyfgxHWETHc20p5Hl81Nl0vpM" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true">
