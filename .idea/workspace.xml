@@ -2,10 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b2cf437c-fcf6-4967-80ea-5c344acae367" name="默认更改列表" comment="">
-      <change afterPath="$PROJECT_DIR$/day01/client/client.go" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/day01/server/server.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/day01/server/server.exe" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/day02/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/day02/httpserver.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/day01/main.go" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/day01/client/client.go" beforeDir="false" afterPath="$PROJECT_DIR$/day01/client/client.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/day01/server/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/day01/server/server.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,7 +36,13 @@
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="go.import.settings.migrated" value="true" />
     <property name="go.sdk.automatically.set" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/day02" />
+    <property name="settings.editor.selected.configurable" value="com.intellij.profiler.configurations.ui.EditProfilerConfigurationsComponent" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\GoWorks\day02" />
+    </key>
   </component>
   <component name="RunDashboard">
     <option name="ruleStates">
@@ -71,7 +79,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>

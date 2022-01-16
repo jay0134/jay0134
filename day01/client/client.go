@@ -24,7 +24,7 @@ func main() {
 		fmt.Println(err)
 		return
 	}
-	req.Header.Add("api-token", "asda45asdeda54asd8e41d")
+	req.Header.Add("ApiToken", "asda45asdeda54asd8e41d")
 	req.Header.Add("Content-Type", "application/json")
 
 	res, err := client.Do(req)

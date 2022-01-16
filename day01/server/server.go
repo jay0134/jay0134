@@ -1,11 +1,13 @@
 package main
 
 import (
-	"flag"
 	"fmt"
-	"io/ioutil"
+	"log"
+	"net"
 	"net/http"
+	"net/http/pprof"
 	"os"
+	"strings"
 )
 
 /*
@@ -16,49 +18,69 @@ import (
 */
 
 func main() {
-	host := flag.String("host", "127.0.0.1", "listen host")
-	port := flag.String("port", "8000", "listen port")
-	flag.Parse()
-	http.HandleFunc("/healthz", Healthz)
-
-	err := http.ListenAndServe(*host+":"+*port, nil)
-
-	if err != nil {
-		panic(err)
+	mux := http.NewServeMux()
+	// 06. debug
+	mux.HandleFunc("/debug/pprof/", pprof.Index)
+	mux.HandleFunc("/debug/pprof/profile", pprof.Profile)
+	mux.HandleFunc("/debug/pprof/symbol", pprof.Symbol)
+	mux.HandleFunc("/debug/pprof/trace", pprof.Trace)
+	mux.HandleFunc("/", index)
+	mux.HandleFunc("/healthz", healthz)
+	if err := http.ListenAndServe(":8080", mux); err != nil {
+		log.Fatalf("start http server failed, error: %s\n", err.Error())
 	}
 }
 
-func Healthz(w http.ResponseWriter, r *http.Request) {
-	defer r.Body.Close()
+func index(w http.ResponseWriter, r *http.Request) {
+	// w.Write([]byte("<h1>Welcome to Cloud Native</h1>"))
+	// 03.设置version
+	os.Setenv("VERSION", "v1.0")
+	version := os.Getenv("VERSION")
+	w.Header().Set("VERSION", version)
+	fmt.Printf("os version: %s \n", version)
+	// 02.将requst中的header 设置到 reponse中
+	for k, v := range r.Header {
+		for _, vv := range v {
+			fmt.Printf("Header key: %s, Header value: %s \n", k, v)
+			w.Header().Set(k, vv)
+		}
+	} // 04.记录日志并输出
+	clientip := ClientIP(r)
+	//fmt.Println(r.RemoteAddr)
+	log.Printf("Success! Response code: %d", 200)
+	log.Printf("Success! clientip: %s", clientip)
+}
 
-	// 1. 获取请求数据并打印
-	fmt.Printf("header:%v \n", r.Header)
-	fmt.Printf("host:%v \n", r.Host)
-	fmt.Printf("request-url:%v \n", r.RequestURI)
-	fmt.Printf("method:%v \n", r.Method)
-	//version := os.Environ()
-	//for i:= range version{
-	//	fmt.Println(version[i])
-	//}
-	goPath := os.Getenv("GOPATH")
-	token := r.Header.Get("api-token")
-	requestUrl := r.RequestURI
-	host := r.Host
-	method := r.Method
-	// 2. 请求类型是application/json时从r.Body读取数据
-	b, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		fmt.Printf("read request.Body failed, err:%v\n", err)
-		return
+// 获取客户端ip地址
+func getCurrentIP(r *http.Request) string {
+	// 这里也可以通过X-Forwarded-For请求头的第一个值作为用户的ip
+	// 但是要注意的是这两个请求头代表的ip都有可能是伪造的
+	ip := r.Header.Get("X-Real-IP")
+	if ip == "" {
+		// 当请求头不存在即不存在代理时直接获取ip
+		ip = strings.Split(r.RemoteAddr, ":")[0]
 	}
+	return ip
+}
 
-	fmt.Println(string(b))
-	answer := `{"status": 200}`
-	w.Header().Set("api-token", token)
-	w.Header().Set("host", host)
-	w.Header().Set("Request URL", requestUrl)
-	w.Header().Set("Method", method)
-	w.Header().Set("GOPATH", goPath)
+// 获取真实客户端ip地址，最好的方法
+func ClientIP(r *http.Request) string {
+	xForwardedFor := r.Header.Get("X-Forwarded-For")
+	ip := strings.TrimSpace(strings.Split(xForwardedFor, ",")[0])
+	if ip != "" {
+		return ip
+	}
+	ip = strings.TrimSpace(r.Header.Get("X-Real-Ip"))
+	if ip != "" {
+		return ip
+	}
+	if ip, _, err := net.SplitHostPort(strings.TrimSpace(r.RemoteAddr)); err == nil {
+		return ip
+	}
+	return ""
+}
 
-	w.Write([]byte(answer))
+// 05.健康检查的路由
+func healthz(w http.ResponseWriter, r *http.Request) {
+	fmt.Fprintf(w, "健康检查路由")
 }
